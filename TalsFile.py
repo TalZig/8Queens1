@@ -22,11 +22,11 @@ def crossOver(list1, list2):
     randNum = random.randint(0,10)
     if(randNum <2):
         return list1 ,list2
-    i = random.randint(0,7)
     childrenList1 =[]
     childrenList2 = []
     for j in range(0,7):
-        if(j <= i):
+        i = random.randint(0, 1)
+        if(i == 1):
             childrenList1[j] = list1[j]
             childrenList2[j] = list2[j]
         else:
