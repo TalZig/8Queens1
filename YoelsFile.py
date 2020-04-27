@@ -131,6 +131,13 @@ def main():
 
     print("Solution found after " + str(gen) + " generations.")
     print("The solution is: " + str(currGen[index]))
+    for i in range(8):
+        for j in range(8):
+            if currGen[index][i] == j:
+                print("Q", end = " ")
+            else:
+                print("-", end = " ")
+        print("")
 
 
 
