@@ -121,7 +121,7 @@ def main():
         for l in currGen:
             grades.append(fitnessFunction(l))
         gen = gen + 1
-        print("gen " gen)
+        print("gen " + gen)
 
     index = grades.index(49)
 
