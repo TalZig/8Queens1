@@ -39,4 +39,4 @@ def crossOver(list1, list2):
         randNum = random.randint(0,500)
         if(randNum == 0):
             childrenList2 = mutation(childrenList2,i)
-        return childrenList1, childrenList2
+    return childrenList1, childrenList2
