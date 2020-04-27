@@ -36,16 +36,16 @@ def crossOver(list1, list2):
     randNum = random.randint(0,10)
     if(randNum <2):
         return list1 ,list2
-    childrenList1 =[]
-    childrenList2 = []
+    childrenList1 =[7]
+    childrenList2 = [7]
     for j in range(0,7):
         i = random.randint(0, 1)
         if(i == 1):
-            childrenList1[j] = list1[j]
-            childrenList2[j] = list2[j]
+            childrenList1.append(list1[j])
+            childrenList2.append(list2[j])
         else:
-            childrenList1[j] = list2[j]
-            childrenList2[j] = list1[j]
+            childrenList1.append(list2[j])
+            childrenList2.append(list1[j])
 
     for i in range (0,7):
         randNum = random.randint(0, 500)
@@ -115,12 +115,13 @@ def main():
 
     createNextGen(currGen, grades)
 
-    while (grades.count(49)):
+    while (not grades.count(49)):
         currGen = createNextGen(currGen, grades)
         grades = []
         for l in currGen:
             grades.append(fitnessFunction(l))
         gen = gen + 1
+        print("")
 
     index = grades.index(49)
 
