@@ -123,7 +123,7 @@ def main():
         for l in currGen:
             grades.append(fitnessFunction(l))
         gen = gen + 1
-        if gen % 1000 == 0:
+        if gen % 750 == 0:
             currGen = initialPopulation()
         #print(gen)
 
