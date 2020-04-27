@@ -13,8 +13,7 @@ def fitnessFunction(list):
     return grade
 
 
-def mutation(list):
-    i = random.randint(0,7)
+def mutation(list, i):
     list[i] = random.randint(0,7)
     return list
 
@@ -31,11 +30,13 @@ def crossOver(list1, list2):
             childrenList2[j] = list2[j]
         else:
             childrenList1[j] = list2[j]
-            childrenList2[j] = list2[j]
-    randNum = random.randint(0,100)
-    if(randNum == 0):
-        childrenList1 = mutation(childrenList1)
-    randNum = random.randint(0,100)
-    if(randNum == 0):
-        childrenList2 = mutation(childrenList2)
-    return childrenList1, childrenList2
+            childrenList2[j] = list1[j]
+
+    for i in range (0,7):
+        randNum = random.randint(0, 500)
+        if(randNum == 0):
+            childrenList1 = mutation(childrenList1,i)
+        randNum = random.randint(0,500)
+        if(randNum == 0):
+            childrenList2 = mutation(childrenList2,i)
+        return childrenList1, childrenList2
