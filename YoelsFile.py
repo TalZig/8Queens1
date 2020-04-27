@@ -84,6 +84,7 @@ def createNextGen(currGen, grades):
     currGen.pop(temp[0])
     grades.pop(temp[0])
 
+
     #do 100 times: select 2, crossover, mutation, add to new gen
     poll =[]
     for i in range(len(grades)):
