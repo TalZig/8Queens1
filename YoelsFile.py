@@ -25,7 +25,6 @@ def fitnessFunction(list):
             else:
                 if list[i] + slant == list[j] or list[i] - slant == list[j]:
                     grade = grade - 2
-    print(grade)
     return grade
 
 
