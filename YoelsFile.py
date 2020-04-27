@@ -35,7 +35,7 @@ def mutation(list, i):
 
 def crossOver(list1, list2):
     randNum = random.randint(0,10)
-    if(randNum <2):
+    if(randNum <1):
         return list1 ,list2
     childrenList1 =[]
     childrenList2 = []
