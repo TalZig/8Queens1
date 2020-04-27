@@ -1,7 +1,3 @@
-def fitnessFunction(list):
-    
-
-
 def main():
     print("test")
 
