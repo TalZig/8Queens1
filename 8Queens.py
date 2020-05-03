@@ -29,7 +29,7 @@ def fitnessFunction(list):
 
 
 def mutation(list, i):
-    list[i] = random.randint(0,7)
+    list[i] = random.randint(0,8)
     return list
 
 def crossOver(list1, list2):
@@ -60,31 +60,17 @@ def createNextGen(currGen, grades):
     nextGen = []
 
     #elitism
-    highest = grades.index(max(grades))
-    #temp = [i for i,j in enumerate(currGen) if j == highest]
-    temp = currGen[highest]
-    nextGen.append(temp)
-    currGen.pop(highest)
-    grades.pop(highest)
+    for i in range(2):
+        highest = grades.index(max(grades))
+        temp = currGen[highest]
+        nextGen.append(temp)
+        currGen.pop(highest)
+        grades.pop(highest)
 
-    highest = grades.index(max(grades))
-    #temp = [i for i,j in enumerate(currGen) if j == highest]
-    temp = currGen[highest]
-    nextGen.append(temp)
-    currGen.pop(highest)
-    grades.pop(highest)
+        lowest = grades.index(min(grades))
+        currGen.pop(lowest)
+        grades.pop(lowest)
 
-    lowest = grades.index(min(grades))
-    temp = currGen[lowest]
-    #nextGen.append(temp)
-    currGen.pop(lowest)
-    grades.pop(lowest)
-
-    lowest = grades.index(min(grades))
-    temp = currGen[lowest]
-    #nextGen.append(temp)
-    currGen.pop(lowest)
-    grades.pop(lowest)
 
 
     #do 100 times: select 2, crossover, mutation, add to new gen
@@ -95,7 +81,7 @@ def createNextGen(currGen, grades):
             poll.append(currGen[i])
             count = count - 1
 
-    for k in range(99):
+    for k in range(98):
         choose = randrange(len(poll))
         parent1 = poll[choose]
         choose = randrange(len(poll))
@@ -114,8 +100,6 @@ def main():
     for l in currGen:
         grades.append(fitnessFunction(l))
     gen = 1
-
-    createNextGen(currGen, grades)
 
     while 49 not in grades:
         currGen = createNextGen(currGen, grades)
@@ -140,14 +124,5 @@ def main():
         print("")
 
 
-
-
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
-
