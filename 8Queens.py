@@ -2,6 +2,7 @@ from random import randrange
 import random
 import time
 
+
 def initialPopulation():
     pop = []
     size = 200
@@ -15,11 +16,12 @@ def initialPopulation():
 
     return pop
 
+
 def fitnessFunction(list):
     grade = 49
     slant = 0
-    for i in range(0,8):
-        for j in range(i + 1,8):
+    for i in range(0, 8):
+        for j in range(i + 1, 8):
             slant = j - i
             if list[i] == list[j]:
                 grade = grade - 2
@@ -30,37 +32,39 @@ def fitnessFunction(list):
 
 
 def mutation(list, i):
-    list[i] = random.randint(0,8)
+    list[i] = random.randint(0, 8)
     return list
 
+
 def crossOver(list1, list2):
-    randNum = random.randint(0,10)
-    if(randNum <1):
-        return list1 ,list2
-    childrenList1 =[]
+    randNum = random.randint(0, 10)
+    if (randNum < 1):
+        return list1, list2
+    childrenList1 = []
     childrenList2 = []
-    for j in range(0,8):
+    for j in range(0, 8):
         i = random.randint(0, 1)
-        if(i == 1):
+        if (i == 1):
             childrenList1.append(list1[j])
             childrenList2.append(list2[j])
         else:
             childrenList1.append(list2[j])
             childrenList2.append(list1[j])
 
-    for i in range (0,8):
+    for i in range(0, 8):
         randNum = random.randint(0, 100)
-        if(randNum == 0):
-            childrenList1 = mutation(childrenList1,i)
-        randNum = random.randint(0,100)
-        if(randNum == 0):
-            childrenList2 = mutation(childrenList2,i)
+        if (randNum == 0):
+            childrenList1 = mutation(childrenList1, i)
+        randNum = random.randint(0, 100)
+        if (randNum == 0):
+            childrenList2 = mutation(childrenList2, i)
     return childrenList1, childrenList2
+
 
 def createNextGen(currGen, grades):
     nextGen = []
 
-    #elitism
+    # elitism
     for i in range(2):
         highest = grades.index(max(grades))
         temp = currGen[highest]
@@ -72,10 +76,8 @@ def createNextGen(currGen, grades):
         currGen.pop(lowest)
         grades.pop(lowest)
 
-
-
-    #do 100 times: select 2, crossover, mutation, add to new gen
-    poll =[]
+    # do 100 times: select 2, crossover, mutation, add to new gen
+    poll = []
     for i in range(len(grades)):
         count = grades[i]
         while count > 0:
@@ -111,12 +113,12 @@ def main():
         gen = gen + 1
         if gen % 750 == 0:
             currGen = initialPopulation()
-        #print(gen)
+        # print(gen)
 
     index = grades.index(49)
 
     print("Solution found after " + str(gen) + " generations.")
-    print("running time: %s " %(time.time() - start_time))
+    print("running time: %s " % (time.time() - start_time) + "seconds")
     print("The solution is: " + str(currGen[index]))
     for i in range(8):
         for j in range(8):

@@ -2,6 +2,7 @@ from random import randrange
 import random
 import time
 
+
 def initialPopulation():
     pop = []
     size = 1200
@@ -15,6 +16,7 @@ def initialPopulation():
 
     return pop
 
+
 def fromStrToArr(s):
     arr = []
     for i in range(298):
@@ -25,6 +27,7 @@ def fromStrToArr(s):
         else:
             arr.append(ord(s[i]) - ord('a'))
     return arr
+
 
 def fromArrToStr(a):
     s = ""
@@ -38,6 +41,7 @@ def fromArrToStr(a):
 
     return s
 
+
 def fitnessFunction(ans, chrom):
     score = 298
     for i in range(298):
@@ -47,7 +51,7 @@ def fitnessFunction(ans, chrom):
 
 
 def createNextGen(currGen, grades):
-    nextGen =[]
+    nextGen = []
 
     # elitism
     for i in range(4):
@@ -57,20 +61,19 @@ def createNextGen(currGen, grades):
 
     grades, currGen = zip(*sorted(zip(grades, currGen)))
     pool = []
-    nextGen.append(currGen[len(currGen)-1])
-    nextGen.append(currGen[len(currGen)-2])
-    nextGen.append(currGen[len(currGen) -3])
-    nextGen.append(currGen[len(currGen)-4])
+    nextGen.append(currGen[len(currGen) - 1])
+    nextGen.append(currGen[len(currGen) - 2])
+    nextGen.append(currGen[len(currGen) - 3])
+    nextGen.append(currGen[len(currGen) - 4])
     help = 1
     for i in range(len(grades)):
-        count = help*2
+        count = help * 2
         while count > 0:
             pool.append(currGen[i])
             count = count - 1
         help = help + 1
 
-
-    for k in range((int)(len(grades)/2)):
+    for k in range((int)(len(grades) / 2)):
         choose = randrange(len(pool))
         parent1 = pool[choose]
         choose = randrange(len(pool))
@@ -82,12 +85,14 @@ def createNextGen(currGen, grades):
 
     return nextGen
 
+
 def specialSort(l1, l2):
     for i in range(len(l1) - 1):
         for j in range(len(l1) - 1 - i):
-            if l1[j] > l1[j+1]:
-                l1[j], l1[j+1] = l1[j+1], l1[j]
+            if l1[j] > l1[j + 1]:
+                l1[j], l1[j + 1] = l1[j + 1], l1[j]
                 l2[j], l2[j + 1] = l2[j + 1], l2[j]
+
 
 def crossOver(p1, p2):
     randNum = random.randint(0, 100)
@@ -97,25 +102,27 @@ def crossOver(p1, p2):
     c2 = []
     for j in range(298):
         i = random.randint(0, 1)
-        if(i == 1):
+        if (i == 1):
             c1.append(p1[j])
             c2.append(p2[j])
         else:
             c1.append(p2[j])
             c2.append(p1[j])
 
-    for i in range (298):
+    for i in range(298):
         randNum = random.randint(0, 400)
-        if(randNum < 1):
-            c1 = mutation(c1,i)
-        randNum = random.randint(0,400)
-        if(randNum < 1):
-            c2 = mutation(c2,i)
+        if (randNum < 1):
+            c1 = mutation(c1, i)
+        randNum = random.randint(0, 400)
+        if (randNum < 1):
+            c2 = mutation(c2, i)
     return c1, c2
+
 
 def mutation(list, i):
     list[i] = random.randint(0, 28)
     return list
+
 
 def main():
     start_time = time.time()
@@ -134,10 +141,9 @@ def main():
         gen = gen + 1
 
     index = grades.index(298)
-    print("running time: %s " %(time.time() - start_time) + "seconds")
+    print("running time: %s " % (time.time() - start_time) + "seconds")
     print(" and " + str(gen) + " genertations")
     print(fromArrToStr(currGen[index]))
-
 
     # print ans
 
