@@ -33,7 +33,7 @@ def fromArrToStr(a):
         elif a[i] == 26:
             s = s + "."
         else:
-            s = s + chr(s[i] + ord('a'))
+            s = s + chr(a[i] + ord('a'))
 
     return s
 
