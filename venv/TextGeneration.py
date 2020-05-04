@@ -59,12 +59,16 @@ def createNextGen(currGen, grades):
         currGen.pop(lowest)
         grades.pop(lowest)
 
+    specialSort(grades, currGen)
     pool = []
+
+    help = 1
     for i in range(len(grades)):
-        count = grades[i] * 2
+        count = help*2
         while count > 0:
             pool.append(currGen[i])
             count = count - 1
+        help = help + 1
 
 
     for k in range(495):
@@ -79,9 +83,16 @@ def createNextGen(currGen, grades):
 
     return nextGen
 
+def specialSort(l1, l2):
+    for i in range(len(l1) - 1):
+        for j in range(len(l1) - 1 - i):
+            if l1[j] > l1[j+1]:
+                l1[j], l1[j+1] = l1[j+1], l1[j]
+                l2[j], l2[j + 1] = l2[j + 1], l2[j]
+
 def crossOver(p1, p2):
-    randNum = random.randint(0, 10)
-    if (randNum < 3):
+    randNum = random.randint(0, 100)
+    if (randNum < 30):
         return p1, p2
     c1 = []
     c2 = []
