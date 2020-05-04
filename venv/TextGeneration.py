@@ -34,6 +34,7 @@ def fromArrToStr(a):
             s = s + "."
         else:
             s = s + chr(s[i] + ord('a'))
+
     return s
 
 def fitnessFunction(ans, chrom):
