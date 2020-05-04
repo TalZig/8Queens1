@@ -1,5 +1,6 @@
 from random import randrange
 import random
+import time
 
 def initialPopulation():
     pop = []
@@ -95,6 +96,7 @@ def createNextGen(currGen, grades):
 
 
 def main():
+    start_time = time.time()
     grades = []
     currGen = initialPopulation()
     for l in currGen:
@@ -114,6 +116,7 @@ def main():
     index = grades.index(49)
 
     print("Solution found after " + str(gen) + " generations.")
+    print("running time: %s " %(time.time() - start_time))
     print("The solution is: " + str(currGen[index]))
     for i in range(8):
         for j in range(8):

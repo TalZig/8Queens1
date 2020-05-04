@@ -1,5 +1,6 @@
 from random import randrange
 import random
+import time
 
 def initialPopulation():
     pop = []
@@ -117,6 +118,7 @@ def mutation(list, i):
     return list
 
 def main():
+    start_time = time.time()
     origin = "to be or not to be that is the question. whether tis nobler in the mind to suffer. the slings and arrows of outrageous fortune. or to take arms against a sea of troubles and by opposing end them. to die to sleep. no more. and by a sleep to say we end. the heartache and the thousand natural shocks."
     correctAns = fromStrToArr(origin)
     grades = []
@@ -124,7 +126,6 @@ def main():
     for l in currGen:
         grades.append(fitnessFunction(correctAns, l))
     gen = 1
-
     while 298 not in grades:
         currGen = createNextGen(currGen, grades)
         grades = []
@@ -133,7 +134,8 @@ def main():
         gen = gen + 1
 
     index = grades.index(298)
-    print("Solution found after " + str(gen) + "generations. The solution is:")
+    print("running time: %s " %(time.time() - start_time) + "seconds")
+    print(" and " + str(gen) + " genertations")
     print(fromArrToStr(currGen[index]))
 
 
