@@ -50,15 +50,10 @@ def createNextGen(currGen, grades):
 
     # elitism
     for i in range(4):
-        # highest = grades.index(max(grades))
-        #temp = currGen[highest]
-        #nextGen.append(temp)
-        #currGen.pop(highest)
-        #grades.pop(highest)
-
         lowest = grades.index(min(grades))
         currGen.pop(lowest)
         grades.pop(lowest)
+
     grades, currGen = zip(*sorted(zip(grades, currGen)))
     pool = []
     nextGen.append(currGen[len(currGen)-1])
@@ -136,13 +131,9 @@ def main():
         for l in currGen:
             grades.append(fitnessFunction(correctAns, l))
         gen = gen + 1
-        # if gen % 750 == 0:
-        #     currGen = initialPopulation()
-        print("gen: " + str(gen))
-        print("max grade: " + str(max(grades)))
-        print("")
 
     index = grades.index(298)
+    print("Solution found after " + str(gen) + "generations. The solution is:")
     print(fromArrToStr(currGen[index]))
 
 
