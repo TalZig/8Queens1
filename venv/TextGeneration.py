@@ -3,7 +3,7 @@ import random
 
 def initialPopulation():
     pop = []
-    size = 1000
+    size = 1200
     for i in range(size):
         chrome = []
 
@@ -48,20 +48,22 @@ def createNextGen(currGen, grades):
     nextGen =[]
 
     # elitism
-    for i in range(5):
-        highest = grades.index(max(grades))
-        temp = currGen[highest]
-        nextGen.append(temp)
-        currGen.pop(highest)
-        grades.pop(highest)
+    for i in range(4):
+        # highest = grades.index(max(grades))
+        #temp = currGen[highest]
+        #nextGen.append(temp)
+        #currGen.pop(highest)
+        #grades.pop(highest)
 
         lowest = grades.index(min(grades))
         currGen.pop(lowest)
         grades.pop(lowest)
-
-    specialSort(grades, currGen)
+    grades, currGen = zip(*sorted(zip(grades, currGen)))
     pool = []
-
+    nextGen.append(currGen[len(currGen)-1])
+    nextGen.append(currGen[len(currGen)-2])
+    nextGen.append(currGen[len(currGen) -3])
+    nextGen.append(currGen[len(currGen)-4])
     help = 1
     for i in range(len(grades)):
         count = help*2
@@ -71,7 +73,7 @@ def createNextGen(currGen, grades):
         help = help + 1
 
 
-    for k in range(495):
+    for k in range((int)(len(grades)/2)):
         choose = randrange(len(pool))
         parent1 = pool[choose]
         choose = randrange(len(pool))
@@ -92,7 +94,7 @@ def specialSort(l1, l2):
 
 def crossOver(p1, p2):
     randNum = random.randint(0, 100)
-    if (randNum < 30):
+    if (randNum < 25):
         return p1, p2
     c1 = []
     c2 = []
@@ -106,10 +108,10 @@ def crossOver(p1, p2):
             c2.append(p1[j])
 
     for i in range (298):
-        randNum = random.randint(0, 100)
+        randNum = random.randint(0, 400)
         if(randNum < 1):
             c1 = mutation(c1,i)
-        randNum = random.randint(0,100)
+        randNum = random.randint(0,400)
         if(randNum < 1):
             c2 = mutation(c2,i)
     return c1, c2
