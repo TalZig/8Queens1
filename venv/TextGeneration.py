@@ -58,16 +58,18 @@ def createNextGen(currGen, grades):
         lowest = grades.index(min(grades))
         currGen.pop(lowest)
         grades.pop(lowest)
-
-    grades, currGen = zip(*sorted(zip(grades, currGen)))
-    pool = []
     nextGen.append(currGen[len(currGen) - 1])
     nextGen.append(currGen[len(currGen) - 2])
     nextGen.append(currGen[len(currGen) - 3])
     nextGen.append(currGen[len(currGen) - 4])
+
+
+    grades, currGen = zip(*sorted(zip(grades, currGen)))
+    pool = []
+
     help = 1
     for i in range(len(grades)):
-        count = help * 2
+        count = help
         while count > 0:
             pool.append(currGen[i])
             count = count - 1
@@ -86,17 +88,10 @@ def createNextGen(currGen, grades):
     return nextGen
 
 
-def specialSort(l1, l2):
-    for i in range(len(l1) - 1):
-        for j in range(len(l1) - 1 - i):
-            if l1[j] > l1[j + 1]:
-                l1[j], l1[j + 1] = l1[j + 1], l1[j]
-                l2[j], l2[j + 1] = l2[j + 1], l2[j]
-
-
 def crossOver(p1, p2):
-    randNum = random.randint(0, 100)
-    if (randNum < 25):
+    randNum = random.randint(0, 99)
+    crossOver_rate = 25
+    if (randNum < crossOver_rate):
         return p1, p2
     c1 = []
     c2 = []
@@ -109,43 +104,49 @@ def crossOver(p1, p2):
             c1.append(p2[j])
             c2.append(p1[j])
 
+    # decide wether to make mutation or not
+    mutation_rate = 1
     for i in range(298):
-        randNum = random.randint(0, 400)
-        if (randNum < 1):
+        randNum = random.randint(0, 399)
+        if (randNum < mutation_rate):
             c1 = mutation(c1, i)
-        randNum = random.randint(0, 400)
-        if (randNum < 1):
+        randNum = random.randint(0, 399)
+        if (randNum < mutation_rate):
             c2 = mutation(c2, i)
     return c1, c2
 
-
+#mutation for a single char in solution
 def mutation(list, i):
-    list[i] = random.randint(0, 28)
+    list[i] = random.randint(0, 27)
     return list
 
 
 def main():
     start_time = time.time()
+    #create correct ans
     origin = "to be or not to be that is the question. whether tis nobler in the mind to suffer. the slings and arrows of outrageous fortune. or to take arms against a sea of troubles and by opposing end them. to die to sleep. no more. and by a sleep to say we end. the heartache and the thousand natural shocks."
     correctAns = fromStrToArr(origin)
+
+    #first set of grades
     grades = []
     currGen = initialPopulation()
     for l in currGen:
         grades.append(fitnessFunction(correctAns, l))
     gen = 1
-    while 298 not in grades:
+
+    perfect_score = 298
+    while perfect_score not in grades:
         currGen = createNextGen(currGen, grades)
         grades = []
         for l in currGen:
             grades.append(fitnessFunction(correctAns, l))
         gen = gen + 1
 
-    index = grades.index(298)
-    print("running time: %s " % (time.time() - start_time) + "seconds")
-    print(" and " + str(gen) + " genertations")
+    #print solution
+    index = grades.index(perfect_score)
+    print("Solution found after " + str(gen) + " generations.")
+    print("Running time: %s " % (time.time() - start_time) + "seconds.")
     print(fromArrToStr(currGen[index]))
-
-    # print ans
 
 
 if __name__ == "__main__":

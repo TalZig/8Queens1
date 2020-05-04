@@ -32,14 +32,17 @@ def fitnessFunction(list):
 
 
 def mutation(list, i):
-    list[i] = random.randint(0, 8)
+    list[i] = random.randint(0, 7)
     return list
 
 
 def crossOver(list1, list2):
-    randNum = random.randint(0, 10)
-    if (randNum < 1):
+    #determine wether to do crossover
+    crossOver_rate = 2
+    randNum = random.randint(0, 9)
+    if (randNum < crossOver_rate):
         return list1, list2
+
     childrenList1 = []
     childrenList2 = []
     for j in range(0, 8):
@@ -51,12 +54,14 @@ def crossOver(list1, list2):
             childrenList1.append(list2[j])
             childrenList2.append(list1[j])
 
+    # determine wether to do mutation
+    mutation_rate = 1
     for i in range(0, 8):
-        randNum = random.randint(0, 100)
-        if (randNum == 0):
+        randNum = random.randint(0, 99)
+        if (randNum < mutation_rate):
             childrenList1 = mutation(childrenList1, i)
-        randNum = random.randint(0, 100)
-        if (randNum == 0):
+        randNum = random.randint(0, 99)
+        if (randNum < mutation_rate):
             childrenList2 = mutation(childrenList2, i)
     return childrenList1, childrenList2
 
@@ -64,17 +69,22 @@ def crossOver(list1, list2):
 def createNextGen(currGen, grades):
     nextGen = []
 
-    # elitism
     for i in range(2):
-        highest = grades.index(max(grades))
-        temp = currGen[highest]
-        nextGen.append(temp)
-        currGen.pop(highest)
-        grades.pop(highest)
-
         lowest = grades.index(min(grades))
         currGen.pop(lowest)
         grades.pop(lowest)
+
+    grades, currGen = zip(*sorted(zip(grades, currGen)))
+    pool = []
+    nextGen.append(currGen[len(currGen) - 1])
+    nextGen.append(currGen[len(currGen) - 2])
+    help = 1
+    for i in range(len(grades)):
+        count = help
+        while count > 0:
+            pool.append(currGen[i])
+            count = count - 1
+        help = help + 1
 
     # do 100 times: select 2, crossover, mutation, add to new gen
     poll = []
@@ -85,11 +95,13 @@ def createNextGen(currGen, grades):
             count = count - 1
 
     for k in range(98):
+        #choose parents
         choose = randrange(len(poll))
         parent1 = poll[choose]
         choose = randrange(len(poll))
         parent2 = poll[choose]
 
+        #create children
         child1, child2 = crossOver(parent1, parent2)
         nextGen.append(child1)
         nextGen.append(child2)
@@ -101,25 +113,32 @@ def main():
     start_time = time.time()
     grades = []
     currGen = initialPopulation()
+    #first grades
     for l in currGen:
         grades.append(fitnessFunction(l))
-    gen = 1
+    gen = 0
 
-    while 49 not in grades:
+    perfect_score = 49
+
+    while perfect_score not in grades:
+        #create next gen
         currGen = createNextGen(currGen, grades)
         grades = []
+        ## grade gen
         for l in currGen:
             grades.append(fitnessFunction(l))
         gen = gen + 1
-        if gen % 750 == 0:
+        #if havnt solved yet, initiate population again
+        if gen % 400 == 0:
             currGen = initialPopulation()
-        # print(gen)
 
-    index = grades.index(49)
+    index = grades.index(perfect_score)
 
-    print("Solution found after " + str(gen) + " generations.")
-    print("running time: %s " % (time.time() - start_time) + "seconds")
+    print("Solution using GA found after " + str(gen) + " generations.")
+    print("Running time: %s " % (time.time() - start_time) + "seconds.")
     print("The solution is: " + str(currGen[index]))
+
+    #print solution
     for i in range(8):
         for j in range(8):
             if currGen[index][i] == j:
