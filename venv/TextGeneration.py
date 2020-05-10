@@ -54,14 +54,14 @@ def createNextGen(currGen, grades):
     nextGen = []
 
     # elitism
-    for i in range(4):
+    for i in range(2):
         lowest = grades.index(min(grades))
         currGen.pop(lowest)
         grades.pop(lowest)
     nextGen.append(currGen[len(currGen) - 1])
     nextGen.append(currGen[len(currGen) - 2])
-    nextGen.append(currGen[len(currGen) - 3])
-    nextGen.append(currGen[len(currGen) - 4])
+    #nextGen.append(currGen[len(currGen) - 3])
+    #nextGen.append(currGen[len(currGen) - 4])
 
 
     grades, currGen = zip(*sorted(zip(grades, currGen)))
