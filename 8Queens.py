@@ -69,11 +69,6 @@ def crossOver(list1, list2):
 def createNextGen(currGen, grades):
     nextGen = []
 
-    for i in range(2):
-        lowest = grades.index(min(grades))
-        currGen.pop(lowest)
-        grades.pop(lowest)
-
     grades, currGen = zip(*sorted(zip(grades, currGen)))
     pool = []
     nextGen.append(currGen[len(currGen) - 1])
@@ -119,18 +114,25 @@ def main():
     gen = 0
 
     perfect_score = 49
+    f = open("q.txt", "w")
 
     while perfect_score not in grades:
         #create next gen
         currGen = createNextGen(currGen, grades)
+        # if havnt solved yet, initiate population again
+        if gen % 400 == 0:
+            currGen = initialPopulation()
         grades = []
         ## grade gen
         for l in currGen:
             grades.append(fitnessFunction(l))
         gen = gen + 1
-        #if havnt solved yet, initiate population again
-        if gen % 400 == 0:
-            currGen = initialPopulation()
+        f.write(str(max(grades)))
+        f.write(", ")
+        f.write(str(sum(grades) / len(grades)))
+        f.write("\n")
+
+
 
     index = grades.index(perfect_score)
 
